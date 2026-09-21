@@ -1,0 +1,4 @@
+FxMultiHost 7-Path incorporates the FxSound DfxDsp component.
+The official FxSound source is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0).
+See https://github.com/fxsound2/fxsound-app for the upstream source and license.
+This project is experimental software and is provided without warranty.
