@@ -1,0 +1,49 @@
+name: Build FxMultiHost 7-Path
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout FxMultiHost
+        uses: actions/checkout@v4
+
+      - name: Checkout official FxSound source
+        uses: actions/checkout@v4
+        with:
+          repository: fxsound2/fxsound-app
+          path: fxsound-app
+          fetch-depth: 1
+
+      - name: Build FxSound DSP
+        shell: cmd
+        run: |
+          msbuild fxsound-app\dsp\DfxDsp.vcxproj ^
+            /p:Configuration=Release ^
+            /p:Platform=x64 ^
+            /m
+
+      - name: Build FxMultiHost
+        shell: cmd
+        run: |
+          msbuild app\FxMultiHost7.vcxproj ^
+            /p:Configuration=Release ^
+            /p:Platform=x64 ^
+            /m
+
+      - name: Prepare package
+        shell: powershell
+        run: |
+          New-Item -ItemType Directory -Force -Path package | Out-Null
+          Copy-Item "app\x64\Release\FxMultiHost7.exe" "package\FxMultiHost7.exe"
+          Copy-Item "README.md" "package\README.md"
+          Copy-Item "LICENSE.txt" "package\LICENSE.txt"
+
+      - name: Upload Windows executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: FxMultiHost7-Windows-x64
+          path: package
