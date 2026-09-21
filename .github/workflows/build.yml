@@ -1,4 +1,3 @@
-```yaml
 name: Build FxMultiHost 7-Path
 
 on:
@@ -46,9 +45,8 @@ jobs:
           Copy-Item "README.md" "package\README.md"
           Copy-Item "LICENSE.txt" "package\LICENSE.txt"
 
-      - name: Upload Windows executable
+           - name: Upload Windows executable
         uses: actions/upload-artifact@v4
         with:
           name: FxMultiHost7-Windows-x64
           path: package
-```
