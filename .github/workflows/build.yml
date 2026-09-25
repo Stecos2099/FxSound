@@ -37,6 +37,11 @@ jobs:
           /p:Platform=x64
           /m
 
+      - name: Install Windows Driver Kit
+        shell: powershell
+        run: |
+          winget install --id Microsoft.WindowsWDK.10.0.26100 --exact --silent --accept-package-agreements --accept-source-agreements
+      
       - name: Build FxVAD driver
         shell: cmd
         run: >
