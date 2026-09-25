@@ -76,6 +76,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\fxsound-app\audiopassthru\audiopassthru.vcxproj">
+     <Project>{7685E345-0410-4F72-A8F7-A08D85C2E7CE}</Project>
+     <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+
     <ProjectReference Include="..\fxsound-app\dsp\DfxDsp.vcxproj">
       <Project>{F72F101C-13C0-4638-9FFA-BF15861D6F67}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
