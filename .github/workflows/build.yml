@@ -72,15 +72,15 @@ jobs:
           /p:Platform=x64
           /m
       
-      - name: Build FxVAD driver
-          shell: cmd
-          run: >
-          msbuild fxsound-driver\fxvad\pcmex\vadpcmex.vcxproj
-           /p:Configuration=Release
-           /p:Platform=x64
-           /m
+   - name: Build FxVAD driver
+  shell: cmd
+  run: >
+    msbuild fxsound-driver\fxvad\pcmex\vadpcmex.vcxproj
+    /p:Configuration=Release
+    /p:Platform=x64
+    /m
 
-    - name: Prepare driver package
+- name: Prepare driver package
   shell: powershell
   run: |
     New-Item -ItemType Directory -Force -Path package\fxvad
