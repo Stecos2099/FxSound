@@ -37,7 +37,7 @@ jobs:
           /p:Platform=x64
           /m
 
-            - name: Install Windows Driver Kit
+      - name: Install Windows Driver Kit
         shell: powershell
         run: |
           $wdkUrl = "https://go.microsoft.com/fwlink/?linkid=2196230"
@@ -63,6 +63,14 @@ jobs:
             Select-Object Name
 
           Write-Host "WDK installation detected."
+
+      - name: Build FxVAD driver
+        shell: cmd
+        run: >
+          msbuild fxsound-driver\fxvad\fxvad.sln
+          /p:Configuration=Release
+          /p:Platform=x64
+          /m
       
       - name: Build FxVAD driver
         shell: cmd
