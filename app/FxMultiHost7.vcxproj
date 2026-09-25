@@ -59,8 +59,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
 
       <!-- FxSound DSP library is outside the app directory -->
-      <AdditionalDependencies>
-        $(SolutionDir)..\fxsound-app\lib\Release-x64\DfxDsp.lib;
+      <AdditionalDependencies>$(SolutionDir)..\fxsound-app\lib\Release-x64\DfxDsp.lib;
+        $(SolutionDir)..\fxsound-app\lib\Release-x64\audiopassthru.lib;
         avrt.lib;
         ole32.lib;
         uuid.lib;
