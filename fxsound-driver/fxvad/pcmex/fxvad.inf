@@ -17,9 +17,57 @@ PnpLockDown=1
 
 [DFX.NTx86]
 %DFX_Device.DeviceDesc%=DFX_Device,Root\%DEV_NAME%,*%DEV_NAME%
+%VAIO1_Device.DeviceDesc%=VAIO1_Device,Root\VAIO1,*VAIO1
 
 [DFX.NTamd64]
 %DFX_Device.DeviceDesc%=DFX_Device,Root\%DEV_NAME%,*%DEV_NAME%
+%VAIO1_Device.DeviceDesc%=VAIO1_Device,Root\VAIO1,*VAIO1
+
+;-----------------------------------------------------------------------------
+;
+; VAIO1 installation
+;
+;-----------------------------------------------------------------------------
+
+[VAIO1_Device.NT]
+Include=ks.inf,wdmaudio.inf
+Needs=KS.Registration, WDMAUDIO.Registration
+CopyFiles=DFX_Device.CopyList
+AddReg=VAIO1_Device.AddReg
+AddProperty=DFX_1AddPropertySection
+
+[VAIO1_Device.NT.Interfaces]
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_Wave%,VAIO1_Device.I.Wave
+AddInterface=%KSCATEGORY_RENDER%,%KSNAME_Wave%,VAIO1_Device.I.Wave
+AddInterface=%KSCATEGORY_AUDIO%,%KSNAME_Topology%,VAIO1_Device.I.Topo
+
+[VAIO1_Device.NT.Services]
+AddService=%DEV_NAME%,0x00000002,DFX_Device_Service_Inst
+
+[VAIO1_Device.AddReg]
+HKR,,AssociatedFilters,,"wdmaud,swmidi,redbook"
+HKR,,Driver,,fxvad.sys
+HKR,Drivers,SubClasses,,"wave,midi,mixer"
+HKR,Drivers\wave\wdmaud.drv,Driver,,wdmaud.drv
+HKR,Drivers\midi\wdmaud.drv,Driver,,wdmaud.drv
+HKR,Drivers\mixer\wdmaud.drv,Driver,,wdmaud.drv
+HKR,Drivers\wave\wdmaud.drv,Description,,%VAIO1_Device.DeviceDesc%
+HKR,Drivers\midi\wdmaud.drv,Description,,%DFX_Device_MIDI%
+HKR,Drivers\mixer\wdmaud.drv,Description,,%VAIO1_Device.DeviceDesc%
+
+[VAIO1_Device.I.Wave]
+AddReg=VAIO1_Device.I.Wave.AddReg
+
+[VAIO1_Device.I.Wave.AddReg]
+HKR,,CLSID,,%Proxy.CLSID%
+HKR,,FriendlyName,,%VAIO1_Device.Wave.szPname%
+
+[VAIO1_Device.I.Topo]
+AddReg=VAIO1_Device.I.Topo.AddReg, OEMSettingsOverride.AddReg
+
+[VAIO1_Device.I.Topo.AddReg]
+HKR,,CLSID,,%Proxy.CLSID%
+HKR,,FriendlyName,,%VAIO1_Device.Topo.szPname%
 
 ;-----------------------------------------------------------------------------
 ;
@@ -135,6 +183,10 @@ MfgName="FxSound"
 DEV_NAME="FXVAD"
 DFX_Device.DeviceDesc="FxSound Audio Enhancer"
 DFX_Device.SvcDesc="FxSound Audio Enhancer"
+
+VAIO1_Device.DeviceDesc="VAIO1"
+VAIO1_Device.Wave.szPname="VAIO1"
+VAIO1_Device.Topo.szPname="VAIO1 Topology"
 
 DFX_1_Icon_File="%10%\fxvad.sys,-101"
 
