@@ -37,10 +37,32 @@ jobs:
           /p:Platform=x64
           /m
 
-      - name: Install Windows Driver Kit
+            - name: Install Windows Driver Kit
         shell: powershell
         run: |
-          winget install --id Microsoft.WindowsWDK.10.0.26100 --exact --silent --accept-package-agreements --accept-source-agreements
+          $wdkUrl = "https://go.microsoft.com/fwlink/?linkid=2196230"
+          $installer = "$env:RUNNER_TEMP\wdksetup.exe"
+
+          Invoke-WebRequest -Uri $wdkUrl -OutFile $installer
+
+          Start-Process -FilePath $installer `
+            -ArgumentList "/quiet /norestart" `
+            -Wait `
+            -PassThru
+
+          Write-Host "Checking WDK installation..."
+
+          $wdkRoot = "C:\Program Files (x86)\Windows Kits\10"
+
+          if (-not (Test-Path "$wdkRoot\Include")) {
+              Write-Error "Windows Driver Kit installation was not detected."
+              exit 1
+          }
+
+          Get-ChildItem "$wdkRoot\Include" -Directory |
+            Select-Object Name
+
+          Write-Host "WDK installation detected."
       
       - name: Build FxVAD driver
         shell: cmd
