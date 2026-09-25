@@ -65,14 +65,6 @@ jobs:
           Write-Host "WDK installation detected."
 
       - name: Build FxVAD driver
-        shell: cmd
-        run: >
-          msbuild fxsound-driver\fxvad\fxvad.sln
-          /p:Configuration=Release
-          /p:Platform=x64
-          /m
-      
-   - name: Build FxVAD driver
   shell: cmd
   run: >
     msbuild fxsound-driver\fxvad\pcmex\vadpcmex.vcxproj
