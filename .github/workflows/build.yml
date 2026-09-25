@@ -78,6 +78,7 @@ jobs:
           msbuild fxsound-driver\fxvad\fxvad.sln
           /p:Configuration=Release
           /p:Platform=x64
+          /p:WindowsTargetPlatformVersion=10.0.22621.0
           /m
 
       - name: Prepare driver package
