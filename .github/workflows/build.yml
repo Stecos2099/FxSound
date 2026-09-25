@@ -21,13 +21,29 @@ jobs:
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
+      - name: Build AudioPassthru
+        shell: cmd
+        run: >
+          msbuild fxsound-app\audiopassthru\audiopassthru.vcxproj
+          /p:Configuration=Release
+          /p:Platform=x64
+          /m
+
       - name: Build FxSound DSP
         shell: cmd
-        run: msbuild fxsound-app\dsp\DfxDsp.vcxproj /p:Configuration=Release /p:Platform=x64 /m
+        run: >
+          msbuild fxsound-app\dsp\DfxDsp.vcxproj
+          /p:Configuration=Release
+          /p:Platform=x64
+          /m
 
       - name: Build FxMultiHost
         shell: cmd
-        run: msbuild app\FxMultiHost7.vcxproj /p:Configuration=Release /p:Platform=x64 /m
+        run: >
+          msbuild app\FxMultiHost7.vcxproj
+          /p:Configuration=Release
+          /p:Platform=x64
+          /m
 
       - name: Prepare package
         shell: powershell
