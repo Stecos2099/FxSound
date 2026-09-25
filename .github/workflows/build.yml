@@ -37,6 +37,25 @@ jobs:
           /p:Platform=x64
           /m
 
+      - name: Build FxVAD driver
+        shell: cmd
+        run: >
+          msbuild fxsound-driver\fxvad\fxvad.sln
+          /p:Configuration=Release
+          /p:Platform=x64
+          /m
+
+      - name: Prepare driver package
+        shell: powershell
+        run: |
+          New-Item -ItemType Directory -Force -Path package\fxvad
+          Copy-Item "fxsound-driver\fxvad\pcmex\fxvad.inf" "package\fxvad\fxvad.inf"
+          Get-ChildItem "fxsound-driver\fxvad" -Recurse -Filter "fxvad.sys" |
+            Select-Object -First 1 |
+            Copy-Item -Destination "package\fxvad\fxvad.sys"
+          Get-ChildItem "fxsound-driver\fxvad" -Recurse -Filter "*.cat" |
+            Copy-Item -Destination "package\fxvad\" -Force
+      
       - name: Build FxMultiHost
         shell: cmd
         run: >
